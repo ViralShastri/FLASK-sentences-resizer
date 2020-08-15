@@ -1,0 +1,41 @@
+{% extends "bootstrap/base.html" %}
+{% block navbar %}
+    <ul>
+        <li>
+            <a href="/">Adjust Text</a>
+        </li>
+        <li>
+            <a href="/add">Edit Dictionary</a>
+        </li>
+    </ul>
+{% endblock %}
+{% block content %}
+<div style="margin-left: 2vw;">
+    <h1>Text Shortener</h1>
+    <p>Enter your text below :</p>
+    <form method="post" action="/add">
+        <label for="syn_a" id="label_syn_a">Word</label><br>
+        <input  id="syn_a" name="syn_a" value="" />
+        <br>
+        <br>
+        
+        <label for="syn_b" id="label_syn_b">Synonym</label><br>
+        <input  id="syn_b" name="syn_b" value="" />
+        <br>
+        <br>
+
+        
+        <label for="is_inc" id="label_is_inc">What to do?</label><br>
+        <select  id="is_inc" name="is_inc" >
+            <option value="0">Exclude</option>
+            <option selected value="1">Include</option>
+        </select>
+        <br>
+        <br>
+
+        <input type="submit" value="Submit">
+        <input type="reset">
+
+    </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,170 @@
+{% extends "bootstrap/base.html" %}
+{% block navbar %}
+    <ul>
+        <li>
+            <a href="/">Adjust Text</a>
+        </li>
+        <li>
+            <a href="/add">Edit Dictionary</a>
+        </li>
+    </ul>
+{% endblock %}
+{% block content %}
+<div style="margin-left: 2vw;">
+    <h1>Text Shortener</h1>
+    <p>Enter your text below :</p>
+    <form method="post" action="/">
+        <label for="text" id="label_text">Text</label><br>
+        <textarea id="text" name="text" rows="2" cols="70" value="">{{text}}</textarea>
+        <br>
+        <br>
+
+        <label for = "lengths">
+            Desired lengths:
+            <br>
+            Enter the lengths from highest to lowest priority separated bu commas.
+        </label><br>
+        <input type="text" id="lengths" name="lengths" value="{{lengths}}"/>
+        <br>
+        <br>
+        
+
+        <label>
+            The words to change list:
+            <br>
+            Should be separated by commas(word1,word2,word3), do not put spaces in between words.
+        </label><br>
+        <textarea type="text" name="can_rep" rows="5" cols="70" value="">{{can_rep}}</textarea><br>
+
+        <input type="submit" value="Submit">
+        <input type="reset">
+
+    </form>
+    {% if suggs %}
+        {% for length, suggs_list in suggs.items() %}
+        <div class="card">
+            <div class="card-header" id="heading{{length}}">
+              <h1 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{length}}" aria-expanded="true" aria-controls="collapse{{length}}">
+                    {{length}} ({{suggs_list|length }} suggestions!)
+                </button>
+              </h1>
+            </div>
+            <div id="collapse{{length}}" class="collapse collapsed" aria-labelledby="heading{{length}}" data-parent="#accordion">
+                <div class="card-body">
+                    {% for sugg in suggs_list%}
+                        <p>{{sugg}}</p><hr/>
+                    {% endfor %}   
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+<script>
+    sizes = {
+    "A": 11,
+    "B": 11,
+    "C": 11,
+    "D": 12,
+    "E": 12,
+    "F": 10,
+    "G": 12,
+    "H": 12,
+    "I": 6,
+    "J": 7,
+    "K": 12,
+    "L": 11,
+    "M": 17,
+    "N": 13,
+    "O": 13,
+    "P": 10,
+    "Q": 13,
+    "R": 12,
+    "S": 10,
+    "T": 11,
+    "U": 13,
+    "V": 13,
+    "W": 17,
+    "X": 12,
+    "Y": 13,
+    "Z": 9,
+    "a": 8,
+    "b": 8,
+    "c": 8,
+    "d": 9,
+    "e": 7,
+    "f": 6,
+    "g": 8,
+    "h": 9,
+    "i": 5,
+    "j": 5,
+    "k": 10,
+    "l": 5,
+    "m": 14,
+    "n": 10,
+    "o": 9,
+    "p": 9,
+    "q": 9,
+    "r": 7,
+    "s": 7,
+    "t": 5,
+    "u": 9,
+    "v": 9,
+    "w": 14,
+    "x": 9,
+    "y": 10,
+    "z": 8,
+    "1": 7,
+    "2": 8,
+    "3": 9,
+    "4": 5,
+    "5": 10,
+    "6": 10,
+    "7": 8,
+    "8": 9,
+    "9": 9,
+    "0": 9,
+    "!": 5,
+    "@": 17,
+    "#": 10,
+    "$": 8,
+    "%": 15,
+    "^": 9,
+    "&": 15,
+    "*": 9,
+    "(": 6,
+    ")": 5,
+    "_": 10,
+    "-": 5,
+    "+": 9,
+    "=": 10,
+    ".": 5,
+    "<": 10,
+    ">": 10,
+    ",": 4,
+    "/": 5,
+    "?": 7,
+    "\"": 6,
+    ";": 5,
+    ":": 4,
+    "'": 3,
+    "{": 6,
+    "}": 7,
+    "[": 5,
+    "]": 5,
+    "\\": 6,
+    "|": 3,
+    "`": 5,
+    "~": 11,
+    " ": 5
+}
+    document.getElementById("text").addEventListener('input', 
+    function f(evt){
+        length = document.getElementById("text").value.split("").map(x => (x in sizes)? sizes[x]: x).reduce((a,b)=> a+b,0)
+
+        document.getElementById("label_text").innerHTML = "Text ("+ ( isNaN(length)? "Bad characters in text!" : length) +")"
+    });
+</script>  
+</div>
+{% endblock %} 
+</html>
